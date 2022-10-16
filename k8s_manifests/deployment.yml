@@ -1,0 +1,35 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "board-api-deployment"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "appinno"
+  template:
+    metadata:
+      labels:
+        app: "appinno"
+    spec:
+      containers:
+        - name: "board-api"
+          image: "acrappinno.azurecr.io/board-api"
+          ports:
+          - containerPort: 80
+
+
+      #     resources:
+      #       requests:
+      #         memory: "64Mi"
+      #         cpu: "250m"
+      #       limits:
+      #         memory: "128Mi"
+      #         cpu: "500m"
+      #     volumeMounts:
+      #     - mountPath: "/mnt/azure"
+      #       name: demo-vol
+      # volumes:                         
+      # - name: demo-vol
+      #   persistentVolumeClaim:
+      #     claimName: my-azurefile

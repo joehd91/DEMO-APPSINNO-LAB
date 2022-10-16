@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: "board-api-clusterip"
+spec:
+    type: ClusterIP
+    ports:
+    - port: 80
+    selector:
+        app: "appinno"
+# apiVersion: v1
+# kind: Service
+# metadata:
+#     name: "ghworkshop"
+#     labels:
+#         app: "ghworkshop"
+# spec:
+#     type: LoadBalancer
+#     ports:
+#     - port: 8090
+#       targetPort: 8090
+#       protocol: TCP
+#       name: http
+#     selector:
+#         app: "ghworkshop"
