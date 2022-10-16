@@ -1,0 +1,107 @@
+# ========= Apps Inno with GitHub ===============================================
+#    Name    : Demo for Apps Inno with GitHub
+#    Date    : 2022.10.17
+#    Author  : 장현덕
+#    Update  : 
+# ===============================================================================
+
+# -------------------------------------------------------------------------------
+# Note
+# -------------------------------------------------------------------------------
+# Java Spring Boot 빌드
+# 
+# Maven으로 구성된 Java Spring Boot 프로텍트 빌드
+# jib를 이용해 빌드 및 도커라이징 하고 ACR에 push
+# ACR에 push된 이미지를 이용해 Azure Kubernetes Service에 어플리케이션 배포
+
+name: Java Build with Maven & Deploy to AKS
+
+on:
+  push:
+    paths:
+     - 'board-api/**'
+     - 'k8s_manifests/**'
+     - '!board-api/**.md'
+     - '!.github/**'
+    branches: [ main ]
+  # pull_request:
+  #   paths:
+  #     - 'api/**'
+  #     - '!api/**.md'
+  #   branches: [ main ]
+    
+env:
+  # app env
+  WORKING_DIR: 'board-api'
+  
+  # azure env
+  AZURE_RG: 'demo-appinno-rg'
+  ACR_NAME: 'demoappinnoacr001'
+  SECRET: 'secret-for-acr'
+  AKS_CLUSTER: 'demo-appinno-aks-001'
+  NAMESPACE: 'boardapi'
+  APP_NAME: 'board-api'
+
+jobs:
+  build-and-push-to-acr:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Azure Container Registry Login
+      uses: Azure/docker-login@v1
+      with:
+        login-server: ${{ env.ACR_NAME }}.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }} 
+        password: ${{ secrets.ACR_PASSWORD }} 
+
+    - run: |
+        echo 'Start Build and Push to ACR'
+        
+        cd board-api
+        mvn compile jib:build -Djib.to.tags=${{ github.sha }}
+        
+        echo 'Complete Build and Push to ACR'
+     
+  deploy-to-aks:
+    needs: build-and-push-to-acr
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    # Set the target Azure Kubernetes Service (AKS) cluster. 
+    - uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.AKS_CLUSTER }}`
+        resource-group: ${{ env.AZURE_RG }}
+        
+    # Create namespace if doesn't exist
+    - run: |
+        kubectl create namespace ${{ env.NAMESPACE }} --dry-run=client -o json | kubectl apply -f -
+
+    # Create image pull secret for ACR
+    - uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ env.ACR_NAME }}.azurecr.io
+        container-registry-username: ${{ secrets.ACR_USERNAME }}
+        container-registry-password: ${{ secrets.ACR_PASSWORD }}
+        secret-name: ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
+        arguments: --force true
+    
+    # Deploy app to AKS
+    - uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          k8s_manifests/cluster-issuer.yml
+          k8s_manifests/deployment.yml
+          k8s_manifests/service.yml
+          k8s_manifests/ingress.yml
+        images: |
+          ${{ env.ACR_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        imagepullsecrets: |
+          ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
