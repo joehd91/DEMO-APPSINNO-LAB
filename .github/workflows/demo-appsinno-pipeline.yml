@@ -52,9 +52,9 @@ jobs:
     - name: Azure Container Registry Login
       uses: Azure/docker-login@v1
       with:
-        login-server: ${{ env.ACR_NAME }}.azurecr.io
-        username: ${{ secrets.ACR_USERNAME }} 
-        password: ${{ secrets.ACR_PASSWORD }} 
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }} 
 
     - run: |
         echo 'Start Build and Push to ACR'
@@ -85,7 +85,7 @@ jobs:
     # Create image pull secret for ACR
     - uses: azure/k8s-create-secret@v1
       with:
-        container-registry-url: ${{ env.ACR_NAME }}.azurecr.io
+        container-registry-url: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         container-registry-username: ${{ secrets.ACR_USERNAME }}
         container-registry-password: ${{ secrets.ACR_PASSWORD }}
         secret-name: ${{ env.SECRET }}
@@ -101,7 +101,7 @@ jobs:
           k8s_manifests/service.yml
           k8s_manifests/ingress.yml
         images: |
-          ${{ env.ACR_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+          ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}
         imagepullsecrets: |
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
