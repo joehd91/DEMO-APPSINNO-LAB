@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: "board-api-deployment"
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: "appinno"
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: "board-api"
-          image: "acrappinno.azurecr.io/board-api"
+          image: "demoappinno.azurecr.io/board-api"
           ports:
           - containerPort: 80
 
