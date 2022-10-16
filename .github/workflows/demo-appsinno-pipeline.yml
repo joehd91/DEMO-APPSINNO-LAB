@@ -47,9 +47,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: 'Checkout Source Code'
+      uses: actions/checkout@v2
     
-    - name: Azure Container Registry Login
+    - name: 'Azure Container Registry Login'
       uses: Azure/docker-login@v1
       with:
         login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
@@ -69,10 +70,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: 'Checkout Source Code'
+      uses: actions/checkout@v2
     
     # Set the target Azure Kubernetes Service (AKS) cluster. 
-    - uses: azure/aks-set-context@v1
+    - name: 'AKS Credential'
+      uses: azure/aks-set-context@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: ${{ env.AKS_CLUSTER }}`
@@ -83,17 +86,19 @@ jobs:
         kubectl create namespace ${{ env.NAMESPACE }} --dry-run=client -o json | kubectl apply -f -
 
     # Create image pull secret for ACR
-    - uses: azure/k8s-create-secret@v1
+    - name: 'Create Image Pull Secret for ACR'
+      uses: azure/k8s-create-secret@v1
       with:
         container-registry-url: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-        container-registry-username: ${{ secrets.ACR_USERNAME }}
-        container-registry-password: ${{ secrets.ACR_PASSWORD }}
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
         arguments: --force true
     
     # Deploy app to AKS
-    - uses: azure/k8s-deploy@v1
+    - name: 'Deploy to Azure Kubernetes Service'
+      uses: azure/k8s-deploy@v1
       with:
         manifests: |
           k8s_manifests/cluster-issuer.yml
