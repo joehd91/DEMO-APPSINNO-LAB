@@ -78,9 +78,9 @@ jobs:
     - name: 'AKS Credential'
       uses: azure/aks-set-context@v1
       with:
-        # creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: '${{ env.AKS_CLUSTER }}'
-        resource-group: '${{ env.AZURE_RG }}'
+        # creds: ${{ secrets.AZURE_CREDENTIALS }}
+        cluster-name: ${{ env.AKS_CLUSTER }}
+        resource-group: ${{ env.AZURE_RG }}
         
     # Create namespace if doesn't exist
     - run: |
