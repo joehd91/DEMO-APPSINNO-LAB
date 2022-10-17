@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: "board-api"
-          image: "demoappinno.azurecr.io/board-api"
+          image: "demoappinnoacr001.azurecr.io/board-api"
           ports:
           - containerPort: 80
 
