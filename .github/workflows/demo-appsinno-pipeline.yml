@@ -28,8 +28,8 @@ on:
   #   paths:
   #     - 'api/**'
   #     - '!api/**.md'
-  #   branches: [ main ]
-  #
+  #   branches: [ "main" ]
+  
     
 env:
   # app env
