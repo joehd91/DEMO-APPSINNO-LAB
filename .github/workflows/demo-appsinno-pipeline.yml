@@ -23,7 +23,7 @@ on:
      - 'k8s_manifests/**'
      - '!board-api/**.md'
      - '!.github/**'
-    branches: [ main ]
+    branches: [ "main" ]
   # pull_request:
   #   paths:
   #     - 'api/**'
