@@ -1,4 +1,5 @@
-apiVersion: cert-manager.io/v1alpha2
+# apiVersion: cert-manager.io/v1alpha2
+apiVersion: certmanager.k8s.io/v1alpha2
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
@@ -12,7 +13,7 @@ spec:
     - http01:
         ingress:
           class: nginx
-          # podTemplate:
-          #   spec:
-          #     nodeSelector:
-          #       "kubernetes.io/os": linux
+          podTemplate:
+            spec:
+              nodeSelector:
+                "kubernetes.io/os": linux
