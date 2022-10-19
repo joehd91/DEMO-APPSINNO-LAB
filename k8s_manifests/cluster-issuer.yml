@@ -1,5 +1,21 @@
 # apiVersion: cert-manager.io/v1alpha2
-apiVersion: certmanager.k8s.io/v1alpha2
+# kind: Certificate
+#  metadata:
+#   name: certificate-name
+# spec:
+#   secretName: tls-cert
+#   duration: 24h
+#   renewBefore: 12h
+#   commonName: hostname
+#   dnsNames:
+#   - hostname
+#   issuerRef:
+#     name: letsencrypt-staging
+#     kind: ClusterIssuer
+
+# ---
+# apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
@@ -21,7 +37,7 @@ spec:
       # Secret resource used to store the account's private key.
       # name: letsencrypt-staging
       # name: letsencrypt-secret
-      name: letsencrypt-staging
+      name: letsencrypt-private-key
       # namespace: ingress-basic
 
     # Enable the HTTP-01 challenge provider
