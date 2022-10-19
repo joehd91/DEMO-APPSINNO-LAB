@@ -39,7 +39,7 @@ env:
   AZURE_RG: 'demo-appinno-rg'
   ACR_NAME: 'demoappinnoacr001'
   SECRET: 'secret-for-acr'
-  AKS_CLUSTER: 'demo-appinno-aks-001'
+  AKS_CLUSTER: 'demo-appinno-aks'
   NAMESPACE: 'boardapi'
   APP_NAME: 'board-api'
 
