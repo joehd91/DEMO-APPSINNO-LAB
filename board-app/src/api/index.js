@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-	baseURL: 'https://appsinnodnslabel.koreacentral.cloudapp.azure.com/',
+	baseURL: 'https://appsinnodnslabel.koreacentral.cloudapp.azure.com:8080',
 })
 
 instance.defaults.headers.post['Content-Type'] =
