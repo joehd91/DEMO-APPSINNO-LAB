@@ -1,6 +1,6 @@
 # ========= Apps Inno with GitHub ===============================================
 #    Name    : Demo for Apps Inno with GitHub
-#    Date    : 2022.10.17
+#    Date    : 2022.10.21
 #    Author  : 장현덕
 #    Update  : 
 # ===============================================================================
@@ -16,14 +16,14 @@
 
 name: Java Build with Maven & Deploy to AKS
 
-# on:
-#   push:
-#     paths:
-#      - 'board-api/**'
-#      - 'k8s_manifests/**'
-#      - '!board-api/**.md'
-#      - '!.github/**'
-#     branches: [ "main" ]
+on:
+  push:
+    paths:
+     - 'board-api/**'
+     - 'k8s_manifests/**'
+     - '!board-api/**.md'
+     - '!.github/**'
+    branches: [ "main" ]
 
   # pull_request:
   #   paths:
@@ -31,16 +31,16 @@ name: Java Build with Maven & Deploy to AKS
   #     - '!api/**.md'
   #   branches: [ "main" ]
   
-    
+
 env:
   # app env
   WORKING_DIR: 'board-api'
   
   # azure env
-  AZURE_RG: 'demo-appinno-rg'
-  ACR_NAME: 'demoappinnoacr001'
+  AZURE_RG: 'demo-appsinno-rg'
+  ACR_NAME: 'demoappsinnoacr'
   SECRET: 'secret-for-acr'
-  AKS_CLUSTER: 'demo-appinno-aks'
+  AKS_CLUSTER: 'demo-appsinno-aks'
   NAMESPACE: 'boardapi'
   APP_NAME: 'board-api'
 
@@ -112,4 +112,3 @@ jobs:
         imagepullsecrets: |
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
-        #

@@ -6,15 +6,15 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: "appinno"
+      app: "appsinno"
   template:
     metadata:
       labels:
-        app: "appinno"
+        app: "appsinno"
     spec:
       containers:
         - name: "board-api"
-          image: "demoappinnoacr001.azurecr.io/board-api"
+          image: "demoappsinnoacr.azurecr.io/board-api"
           ports:
           - containerPort: 80
 

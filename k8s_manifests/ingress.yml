@@ -10,16 +10,16 @@ metadata:
 spec:
   tls:
   - hosts:
-    - appinnodnslabel.koreacentral.cloudapp.azure.com
+    - appsinnodnslabel.koreacentral.cloudapp.azure.com
     secretName: tls-secret
   rules:
-  - host: appinnodnslabel.koreacentral.cloudapp.azure.com
+  - host: appsinnodnslabel.koreacentral.cloudapp.azure.com
     http:
       paths:
       - path: /(.*)
         pathType: Prefix
         backend:
           service:
-            name: demo-appinno-svc
+            name: demo-appsinno-svc
             port:
               number: 80
