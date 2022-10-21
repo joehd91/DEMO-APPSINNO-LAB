@@ -1,25 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: "demo-appsisnno-svc"
+    name: "demo-appsinno-svc"
 spec:
     type: ClusterIP
     ports:
-    - port: 80
+    - name: http
+      port: 8080
+      protocol: TCP
     selector:
         app: "appsinno"
-# apiVersion: v1
-# kind: Service
-# metadata:
-#     name: "ghworkshop"
-#     labels:
-#         app: "ghworkshop"
-# spec:
-#     type: LoadBalancer
-#     ports:
-#     - port: 8090
-#       targetPort: 8090
-#       protocol: TCP
-#       name: http
-#     selector:
-#         app: "ghworkshop"

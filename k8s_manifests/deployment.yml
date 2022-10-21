@@ -16,4 +16,4 @@ spec:
         - name: "board-api"
           image: "demoappsinnoacr.azurecr.io/board-api"
           ports:
-          - containerPort: 80
+          - containerPort: 8080
