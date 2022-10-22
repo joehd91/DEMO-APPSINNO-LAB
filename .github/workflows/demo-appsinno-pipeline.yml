@@ -12,6 +12,7 @@
 # Maven으로 구성된 Java Spring Boot 프로텍트 빌드
 # jib를 이용해 빌드 및 도커라이징 하고 ACR에 push
 # ACR에 push된 이미지를 이용해 Azure Kubernetes Service에 어플리케이션 배포
+#
 
 name: Java Build with Maven & Deploy to AKS
 
