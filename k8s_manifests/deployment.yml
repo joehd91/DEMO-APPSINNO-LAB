@@ -17,3 +17,22 @@ spec:
           image: "demoappsinnoacr.azurecr.io/board-api"
           ports:
           - containerPort: 80
+# apiVersion : apps/v1
+# kind: Deployment
+# metadata:
+#   name: "board-api-deployment"
+# spec:
+#   replicas: 3
+#   selector:
+#     matchLabels:
+#       app: "appsinno"
+#   template:
+#     metadata:
+#       labels:
+#         app: "appsinno"
+#     spec:
+#       containers:
+#         - name: "board-api"
+#           image: "demoappsinnoacr.azurecr.io/board-api"
+#           ports:
+#           - containerPort: 80

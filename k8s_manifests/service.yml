@@ -5,8 +5,19 @@ metadata:
 spec:
     type: ClusterIP
     ports:
-    - name: http
-      port: 80
-      protocol: TCP
+    - port: 80
     selector:
         app: "appsinno"
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#     name: "appsinno-svc"
+# spec:
+#     type: ClusterIP
+#     ports:
+#     - name: http
+#       port: 80
+#       protocol: TCP
+#     selector:
+#         app: "appsinno"

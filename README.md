@@ -33,4 +33,3 @@ git checkout 'branch name'
 ```
 git merge --no-ff 'branch name'
 ```
-```
