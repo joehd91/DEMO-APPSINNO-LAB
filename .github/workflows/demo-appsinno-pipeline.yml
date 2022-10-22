@@ -23,7 +23,8 @@ on:
      - '!board-api/**.md'
      - '!.github/**'
     branches: [ "main" ]
-#
+
+    
   # pull_request:
   #   paths:
   #     - 'api/**'
