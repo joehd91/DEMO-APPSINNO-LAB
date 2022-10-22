@@ -16,3 +16,4 @@ spec:
             spec:
               nodeSelector:
                 "kubernetes.io/os": linux
+                #
