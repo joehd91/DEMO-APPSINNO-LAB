@@ -33,7 +33,6 @@ on:
 env:
   # app env
   WORKING_DIR: 'board-api'
-  
   # azure env
   AZURE_RG: 'demo-appsinno-rg'
   ACR_NAME: 'demoappsinnoacr'
